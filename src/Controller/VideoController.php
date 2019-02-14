@@ -7,11 +7,34 @@
 
 namespace NicoBatty\ThePlaylist\Controller;
 
+use NicoBatty\ThePlaylist\Repository\RepositoryInterface;
+use NicoBatty\ThePlaylist\Response\JsonResponse;
+
 class VideoController implements ControllerInterface
 {
+    /**
+     * @var RepositoryInterface
+     */
+    protected $repository;
+
+    public function __construct(RepositoryInterface $repository)
+    {
+        $this->repository = $repository;
+    }
+
     public function get(int $id)
     {
-        // TODO Implement
+        $response = new JsonResponse();
+        try {
+            $video = $this->repository->findById($id);
+            // TODO Convert
+            $response->setBody(['foo' => 'bar', 'bar' => 'baz']);
+        } catch (\Exception $e) {
+            $response->setBody(
+                ['error' => $e->getMessage()]
+            );
+        }
+        return $response;
     }
 
     public function getList()

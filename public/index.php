@@ -23,5 +23,7 @@ $request = (new RequestFactory())->create($requestParams);
 $router = new Router($routing);
 
 $app = new App($router);
-$app->handle($request);
+$response = $app->handle($request);
+
+$response->render();
 

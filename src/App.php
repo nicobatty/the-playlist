@@ -21,6 +21,7 @@ class App
 
     /**
      * @param RequestInterface $request
+     * @return
      * @throws \Exception
      */
     public function handle(RequestInterface $request)
@@ -28,7 +29,9 @@ class App
         $controller = $this->router->resolveController($request);
         $id = $this->router->resolveId($request);
         $methodName = $this->getMethodName($request, $id);
-        $controller->$methodName($id);
+        $response = $controller->$methodName($id);
+
+        return $response;
     }
 
     protected function getMethodName(RequestInterface $request, ?int $id)

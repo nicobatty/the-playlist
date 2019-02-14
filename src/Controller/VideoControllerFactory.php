@@ -7,11 +7,19 @@
 
 namespace NicoBatty\ThePlaylist\Controller;
 
+use NicoBatty\ThePlaylist\CompositionRoot;
+use NicoBatty\ThePlaylist\Repository\VideoRepository;
+
 class VideoControllerFactory implements ControllerFactoryInterface
 {
     public function create(): ControllerInterface
     {
-        $controller = new VideoController();
+        $compositionRoot = new CompositionRoot();
+        $connection = $compositionRoot->getDbConnection();
+
+        $repository = new VideoRepository($connection);
+
+        $controller = new VideoController($repository);
 
         return $controller;
     }
