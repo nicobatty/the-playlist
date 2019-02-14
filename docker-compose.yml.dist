@@ -12,6 +12,7 @@ services:
     environment:
       - MYSQL_DATABASE=playlist
       - MYSQL_USER=playlist
+      - MYSQL_HOST=db
       - MYSQL_PASSWORD=playlist
       - MYSQL_PORT=3306
 
