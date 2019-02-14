@@ -13,9 +13,9 @@ interface ControllerInterface
 
     public function getList();
 
-    public function create();
+    public function post();
 
-    public function update(int $id);
+    public function put(int $id);
 
     public function delete(int $id);
 }

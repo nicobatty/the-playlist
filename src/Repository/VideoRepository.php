@@ -7,6 +7,7 @@
 
 namespace NicoBatty\ThePlaylist\Repository;
 
+use NicoBatty\ThePlaylist\Exception\NotFoundException;
 
 class VideoRepository implements RepositoryInterface
 {
@@ -17,8 +18,29 @@ class VideoRepository implements RepositoryInterface
         $this->pdo = $pdo;
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NotFoundException
+     */
     public function findById($id)
     {
-        // TODO: Implement findById() method.
+        $stmt = $this->pdo->prepare('SELECT * FROM `video` WHERE `id` = :id');
+        $stmt->execute(['id' => $id]);
+
+        $video = $stmt->fetch();
+        if (!$video) {
+            throw new NotFoundException('This video is missing');
+        }
+
+        return $video;
+    }
+
+    public function findAll()
+    {
+        $stmt = $this->pdo->query('SELECT * FROM `video`');
+        $videos = $stmt->fetchAll();
+
+        return $videos;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace NicoBatty\ThePlaylist\Controller;
 
+use NicoBatty\ThePlaylist\Exception\NotFoundException;
 use NicoBatty\ThePlaylist\Repository\RepositoryInterface;
 use NicoBatty\ThePlaylist\Response\JsonResponse;
 
@@ -27,27 +28,35 @@ class VideoController implements ControllerInterface
         $response = new JsonResponse();
         try {
             $video = $this->repository->findById($id);
-            // TODO Convert
-            $response->setBody(['foo' => 'bar', 'bar' => 'baz']);
-        } catch (\Exception $e) {
-            $response->setBody(
-                ['error' => $e->getMessage()]
-            );
+            $response->setBody($video);
+        } catch (NotFoundException $e) {
+            $this->updateNotFoundResponse($response, $e);
         }
         return $response;
     }
 
     public function getList()
     {
-        // TODO Implement
+        $response = new JsonResponse();
+        $videos = $this->repository->findAll();
+        $response->setBody($videos);
+        return $response;
     }
 
-    public function create()
+    protected function updateNotFoundResponse(JsonResponse $response, \Exception $e)
+    {
+        $response->setBody(
+            ['error' => $e->getMessage()]
+        );
+        $response->setHttpCode(404);
+    }
+
+    public function post()
     {
         // TODO Implement
     }
 
-    public function update(int $id)
+    public function put(int $id)
     {
         // TODO Implement
     }

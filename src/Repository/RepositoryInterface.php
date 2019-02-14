@@ -8,7 +8,16 @@
 namespace NicoBatty\ThePlaylist\Repository;
 
 
+use NicoBatty\ThePlaylist\Exception\NotFoundException;
+
 interface RepositoryInterface
 {
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NotFoundException
+     */
     public function findById($id);
+
+    public function findAll();
 }
