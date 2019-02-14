@@ -1,7 +1,9 @@
 <?php
 
 use NicoBatty\ThePlaylist\App;
+use NicoBatty\ThePlaylist\Controller\VideoControllerFactory;
 use NicoBatty\ThePlaylist\Request\RequestFactory;
+use NicoBatty\ThePlaylist\Route;
 use NicoBatty\ThePlaylist\Router;
 
 require __DIR__ . '/../autoload.php';
@@ -14,9 +16,20 @@ $requestParams = [
     'headers' => getallheaders(),
 ];
 
-$routing = [
-    '/videos' => \NicoBatty\ThePlaylist\Controller\VideoControllerFactory::class
-];
+// /videos/<id>
+$routing[] = (new Route())->setUriRegex('/\\/videos\\/([\\d]+)$/')
+    ->setFactory(VideoControllerFactory::class)
+    ->setMethodMapping([
+        'GET' => 'get',
+        'PUT' => 'put',
+        'DELETE' => 'delete'
+    ]);
+
+$routing[] = (new Route())->setUriRegex('/\\/videos$/')
+    ->setFactory(VideoControllerFactory::class)
+    ->setMethodMapping([
+        'GET' => 'getList',
+    ]);
 
 $request = (new RequestFactory())->create($requestParams);
 

@@ -8,6 +8,7 @@
 namespace NicoBatty\ThePlaylist;
 
 use mysql_xdevapi\Exception;
+use NicoBatty\ThePlaylist\Controller\ControllerFactoryInterface;
 use NicoBatty\ThePlaylist\Request\RequestInterface;
 
 class App
@@ -26,31 +27,30 @@ class App
      */
     public function handle(RequestInterface $request)
     {
-        $controller = $this->router->resolveController($request);
-        $id = $this->router->resolveId($request);
-        $methodName = $this->getMethodName($request, $id);
-        $response = $controller->$methodName($id);
+        $route = $this->router->resolveRoute($request);
+        $factoryName = $route->getFactory();
+        $controller = $this->getController($factoryName);
+        $methodName = $this->getMethodName($request, $route);
+        $params = $route->getParams();
+
+        $response = $controller->$methodName(...$params);
 
         return $response;
     }
 
-    protected function getMethodName(RequestInterface $request, ?int $id)
+    protected function getMethodName(RequestInterface $request, Route $route)
     {
-        switch ($request->getMethod()) {
-            case 'GET':
-                if ($id) {
-                    return 'get';
-                } else {
-                    return 'getList';
-                }
-            case 'POST':
-                return 'create';
-            case 'PUT':
-                return 'update';
-            case 'DELETE':
-                return 'delete';
-            default:
-                throw new Exception('Invalid HTTP Method');
-        }
+        $method = $request->getMethod();
+        $methodMapping = $route->getMethodMapping();
+        return $methodMapping[$method];
+    }
+
+    protected function getController($factoryName)
+    {
+        /** @var ControllerFactoryInterface $factory */
+        $factory = new $factoryName;
+        $controller = $factory->create();
+
+        return $controller;
     }
 }

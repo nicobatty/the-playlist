@@ -8,41 +8,45 @@
 namespace NicoBatty\ThePlaylist;
 
 use NicoBatty\ThePlaylist\Controller\ControllerFactoryInterface;
-use NicoBatty\ThePlaylist\Controller\ControllerInterface;
 use NicoBatty\ThePlaylist\Request\RequestInterface;
 
 class Router
 {
-    protected $routing;
+    /**
+     * @var Route[]
+     */
+    protected $routes;
 
-    public function __construct(array $routing)
+    public function __construct(array $routes)
     {
-        $this->routing = $routing;
+        $this->routes = $routes;
     }
 
     /**
      * @param RequestInterface $request
-     * @return ControllerInterface
+     * @return Route
      * @throws \Exception
      */
-    public function resolveController(RequestInterface $request): ControllerInterface
+    public function resolveRoute(RequestInterface $request): Route
     {
         $uri = $request->getUri();
-        $controllerFactory = $this->getControllerFactory($uri);
-        return $controllerFactory->create();
+        foreach ($this->routes as $route) {
+            if ($this->matchRoute($uri, $route)) {
+                return $route;
+            }
+        }
+        throw new \Exception('No route match your request');
     }
 
-    /**
-     * @param RequestInterface $request
-     * @return int|null
-     */
-    public function resolveId(RequestInterface $request): ?int
+    protected function matchRoute($uri, Route $route)
     {
-        $uri = $request->getUri();
-
-        preg_match('/\\/[a-z]+\\/([\\d]+)/', $uri, $matches);
-
-        return $matches[1] ?? null;
+        $count = preg_match($route->getUriRegex(), $uri, $matches);
+        if (!$count) {
+            return false;
+        }
+        array_shift($matches);
+        $route->setParams($matches);
+        return true;
     }
 
     /**
