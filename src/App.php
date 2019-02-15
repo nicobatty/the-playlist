@@ -7,7 +7,6 @@
 
 namespace NicoBatty\ThePlaylist;
 
-use mysql_xdevapi\Exception;
 use NicoBatty\ThePlaylist\Controller\ControllerFactoryInterface;
 use NicoBatty\ThePlaylist\Request\RequestInterface;
 

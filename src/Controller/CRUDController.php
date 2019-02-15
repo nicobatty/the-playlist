@@ -12,7 +12,7 @@ use NicoBatty\ThePlaylist\Repository\RepositoryInterface;
 use NicoBatty\ThePlaylist\Request\RequestInterface;
 use NicoBatty\ThePlaylist\Response\JsonResponse;
 
-class VideoController implements ControllerInterface
+class CRUDController implements ControllerInterface
 {
     /**
      * @var RepositoryInterface

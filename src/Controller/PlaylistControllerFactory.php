@@ -10,9 +10,9 @@ namespace NicoBatty\ThePlaylist\Controller;
 use NicoBatty\ThePlaylist\CompositionRoot;
 use NicoBatty\ThePlaylist\Repository\CRUDRepository;
 
-class VideoControllerFactory implements ControllerFactoryInterface
+class PlaylistControllerFactory implements ControllerFactoryInterface
 {
-    const VIDEO_TABLE_NAME = 'video';
+    const PLAYLIST_TABLE_NAME = 'playlist';
 
     public function create(): ControllerInterface
     {
@@ -20,7 +20,7 @@ class VideoControllerFactory implements ControllerFactoryInterface
         $connection = $compositionRoot->getDbConnection();
 
         $repository = new CRUDRepository($connection);
-        $repository->setTableName(self::VIDEO_TABLE_NAME);
+        $repository->setTableName(self::PLAYLIST_TABLE_NAME);
 
         $controller = new CRUDController($repository);
 

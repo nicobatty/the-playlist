@@ -1,6 +1,7 @@
 <?php
 
 use NicoBatty\ThePlaylist\App;
+use NicoBatty\ThePlaylist\Controller\PlaylistControllerFactory;
 use NicoBatty\ThePlaylist\Controller\VideoControllerFactory;
 use NicoBatty\ThePlaylist\Request\RequestFactory;
 use NicoBatty\ThePlaylist\Route;
@@ -26,8 +27,26 @@ $routing[] = (new Route())->setUriRegex('/\\/videos\\/([\\d]+)$/')
         'DELETE' => 'delete'
     ]);
 
+// /videos
 $routing[] = (new Route())->setUriRegex('/\\/videos$/')
     ->setFactory(VideoControllerFactory::class)
+    ->setMethodMapping([
+        'GET' => 'getList',
+        'POST' => 'post'
+    ]);
+
+// /playlists/<id>
+$routing[] = (new Route())->setUriRegex('/\\/playlists\\/([\\d]+)$/')
+    ->setFactory(PlaylistControllerFactory::class)
+    ->setMethodMapping([
+        'GET' => 'get',
+        'PUT' => 'put',
+        'DELETE' => 'delete'
+    ]);
+
+// /playlists
+$routing[] = (new Route())->setUriRegex('/\\/playlists$/')
+    ->setFactory(PlaylistControllerFactory::class)
     ->setMethodMapping([
         'GET' => 'getList',
         'POST' => 'post'
