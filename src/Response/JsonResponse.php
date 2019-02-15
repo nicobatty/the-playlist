@@ -35,7 +35,7 @@ class JsonResponse
 
         http_response_code($this->httpCode);
         header('Content-Type: application/json');
-        if ($this->body) {
+        if (is_array($this->body)) {
             echo $json;
         }
     }
