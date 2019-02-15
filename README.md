@@ -20,9 +20,9 @@ The Playlist is a demo project that attempts to boostrap and build a simple REST
 
 ### Playlist / Video link
 
-* `GET    /playlists/<playlist_id>/videos`
-* `POST   /playlists/<playlist_id>/videos/<video_id>`
-* `DELETE /playlists/<playlist_id>/videos/<video_id>`
+* `GET    /playlists/<playlist_id>/videos`: Display videos of playlist <playlist_id> ordered by position
+* `POST   /playlists/<playlist_id>/videos/<video_id>`: Add video <video_id> to the playlist <playlist_id> at last position
+* `DELETE /playlists/<playlist_id>/videos/<video_id>`: Remove video <video_id> from playlist <playlist_id> and reduce post positions by 1.
 
 If you need CURL examples for this API, here is a link: [Curl Examples](curl_examples.md)
 
