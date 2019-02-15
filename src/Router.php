@@ -7,7 +7,6 @@
 
 namespace NicoBatty\ThePlaylist;
 
-use NicoBatty\ThePlaylist\Controller\ControllerFactoryInterface;
 use NicoBatty\ThePlaylist\Request\RequestInterface;
 
 class Router
@@ -47,44 +46,5 @@ class Router
         array_shift($matches);
         $route->setParams($matches);
         return true;
-    }
-
-    /**
-     * @param string $uri
-     * @return ControllerFactoryInterface
-     * @throws \Exception
-     */
-    protected function getControllerFactory(string $uri): ControllerFactoryInterface
-    {
-        $controllerUri = $this->getControllerUri($uri);
-        $factoryClass = $this->getMatchRouting($controllerUri);
-        $controllerFactory = new $factoryClass;
-
-        return $controllerFactory;
-    }
-
-    /**
-     * @param string $uri
-     * @return string
-     * @throws \Exception
-     */
-    protected function getMatchRouting(string $uri): string
-    {
-        if (!isset($this->routing[$uri])) {
-            throw new \Exception(sprintf('No route available for "%s"', $uri));
-        }
-
-        return $this->routing[$uri];
-    }
-
-    protected function getControllerUri(string $uri): string
-    {
-        $slashPos = strpos($uri, '/', 1);
-        if ($slashPos !== false) {
-            $controllerUri = substr($uri, 0, $slashPos);
-        } else {
-            $controllerUri = $uri;
-        }
-        return $controllerUri;
     }
 }
