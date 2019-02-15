@@ -28,8 +28,8 @@ class CRUDController implements ControllerInterface
     {
         $response = new JsonResponse();
         try {
-            $video = $this->repository->findById($id);
-            $response->setBody($video);
+            $object = $this->repository->findById($id);
+            $response->setBody($object);
         } catch (NotFoundException $e) {
             $this->updateNotFoundResponse($response, $e);
         }
@@ -39,8 +39,8 @@ class CRUDController implements ControllerInterface
     public function getList()
     {
         $response = new JsonResponse();
-        $videos = $this->repository->findAll();
-        $response->setBody($videos);
+        $objects = $this->repository->findAll();
+        $response->setBody($objects);
         return $response;
     }
 
@@ -49,9 +49,9 @@ class CRUDController implements ControllerInterface
         $response = new JsonResponse();
         $body = $request->getBody();
         $content = json_decode($body, true);
-        $video = $this->repository->create($content);
+        $object = $this->repository->create($content);
 
-        $response->setBody($video);
+        $response->setBody($object);
 
         return $response;
     }
@@ -62,8 +62,8 @@ class CRUDController implements ControllerInterface
         $body = $request->getBody();
         $content = json_decode($body, true);
         try {
-            $video = $this->repository->update($id, $content);
-            $response->setBody($video);
+            $object = $this->repository->update($id, $content);
+            $response->setBody($object);
         } catch (NotFoundException $e) {
             $this->updateNotFoundResponse($response, $e);
         }
