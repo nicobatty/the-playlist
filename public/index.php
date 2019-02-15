@@ -19,7 +19,7 @@ $requestParams = [
 ];
 
 // /videos/<id>
-$routing[] = (new Route())->setUriRegex('/\\/videos\\/([\\d]+)$/')
+$routing[] = (new Route())->setUriRegex('/^\\/videos\\/([\\d]+)$/')
     ->setFactory(VideoControllerFactory::class)
     ->setMethodMapping([
         'GET' => 'get',
@@ -28,7 +28,7 @@ $routing[] = (new Route())->setUriRegex('/\\/videos\\/([\\d]+)$/')
     ]);
 
 // /videos
-$routing[] = (new Route())->setUriRegex('/\\/videos$/')
+$routing[] = (new Route())->setUriRegex('/^\\/videos$/')
     ->setFactory(VideoControllerFactory::class)
     ->setMethodMapping([
         'GET' => 'getList',
@@ -36,7 +36,7 @@ $routing[] = (new Route())->setUriRegex('/\\/videos$/')
     ]);
 
 // /playlists/<id>
-$routing[] = (new Route())->setUriRegex('/\\/playlists\\/([\\d]+)$/')
+$routing[] = (new Route())->setUriRegex('/^\\/playlists\\/([\\d]+)$/')
     ->setFactory(PlaylistControllerFactory::class)
     ->setMethodMapping([
         'GET' => 'get',
@@ -45,11 +45,19 @@ $routing[] = (new Route())->setUriRegex('/\\/playlists\\/([\\d]+)$/')
     ]);
 
 // /playlists
-$routing[] = (new Route())->setUriRegex('/\\/playlists$/')
+$routing[] = (new Route())->setUriRegex('/^\\/playlists$/')
     ->setFactory(PlaylistControllerFactory::class)
     ->setMethodMapping([
         'GET' => 'getList',
         'POST' => 'post'
+    ]);
+
+// /playlists/<pid>/videos/<vid>
+$routing[] = (new Route())->setUriRegex('/^\\/playlists\\/([\\d]+)\\/videos\\/([\\d]+)$/')
+    ->setFactory(PlaylistControllerFactory::class)
+    ->setMethodMapping([
+        'POST' => 'addVideo',
+        'DELETE' => 'removeVideo'
     ]);
 
 $request = (new RequestFactory())->create($requestParams);

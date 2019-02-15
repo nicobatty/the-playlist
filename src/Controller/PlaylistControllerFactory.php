@@ -8,7 +8,7 @@
 namespace NicoBatty\ThePlaylist\Controller;
 
 use NicoBatty\ThePlaylist\CompositionRoot;
-use NicoBatty\ThePlaylist\Repository\CRUDRepository;
+use NicoBatty\ThePlaylist\Repository\PlaylistRepository;
 
 class PlaylistControllerFactory implements ControllerFactoryInterface
 {
@@ -19,10 +19,10 @@ class PlaylistControllerFactory implements ControllerFactoryInterface
         $compositionRoot = new CompositionRoot();
         $connection = $compositionRoot->getDbConnection();
 
-        $repository = new CRUDRepository($connection);
+        $repository = new PlaylistRepository($connection);
         $repository->setTableName(self::PLAYLIST_TABLE_NAME);
 
-        $controller = new CRUDController($repository);
+        $controller = new PlaylistController($repository);
 
         return $controller;
     }
