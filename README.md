@@ -48,7 +48,7 @@ Server bootstrap: `public/index.php`
 
 ## Table Schema
 
-You can look at `bin/install.php` for most information on the table schema.
+You can look at `bin/install.php` for more information on the table schema.
 
 ## What's missing
 
