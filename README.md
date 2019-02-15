@@ -24,6 +24,8 @@ The Playlist is a demo project that attempts to boostrap and build a simple REST
 * `POST   /playlists/<playlist_id>/videos/<video_id>`
 * `DELETE /playlists/<playlist_id>/videos/<video_id>`
 
+If you need CURL examples for this API, here is a link: [Curl Examples](curl_examples.md)
+
 ## Stack
 
 * PHP 7.3 with Apache
