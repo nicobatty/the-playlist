@@ -37,7 +37,7 @@ class CRUDRepository implements RepositoryInterface
 
         $video = $stmt->fetch();
         if (!$video) {
-            throw new NotFoundException('This video is missing');
+            throw new NotFoundException("This {$this->tableName} is missing");
         }
 
         return $video;
