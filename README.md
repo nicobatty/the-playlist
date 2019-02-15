@@ -46,6 +46,10 @@ docker-compose exec web php bin/install.php
 
 Server bootstrap: `public/index.php`
 
+## Table Schema
+
+You can look at `bin/install.php` for most information on the table schema.
+
 ## What's missing
 
 This project being time constrained, the code structure and functionality was prioritize over what would be necessary for production. There are a few things missing or requiring enhancements.
