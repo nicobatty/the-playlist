@@ -35,4 +35,12 @@ class PlaylistController extends CRUDController
 
         return $response;
     }
+
+    public function getVideos($playlistId)
+    {
+        $response = new JsonResponse();
+        $videos = $this->repository->findVideos($playlistId);
+        $response->setBody($videos);
+        return $response;
+    }
 }

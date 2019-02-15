@@ -60,6 +60,13 @@ $routing[] = (new Route())->setUriRegex('/^\\/playlists\\/([\\d]+)\\/videos\\/([
         'DELETE' => 'removeVideo'
     ]);
 
+// /playlists/<pid>/videos/<vid>
+$routing[] = (new Route())->setUriRegex('/^\\/playlists\\/([\\d]+)\\/videos$/')
+    ->setFactory(PlaylistControllerFactory::class)
+    ->setMethodMapping([
+        'GET' => 'getVideos'
+    ]);
+
 $request = (new RequestFactory())->create($requestParams);
 
 $router = new Router($routing);

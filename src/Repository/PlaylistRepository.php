@@ -59,4 +59,13 @@ class PlaylistRepository extends CRUDRepository
 
         return $position;
     }
+
+    public function findVideos($playlistId)
+    {
+        $stmt = $this->pdo->prepare('SELECT `v`.* FROM `video` AS `v` INNER JOIN `playlist_video` AS `pv` ON `pv`.`video_id` = `v`.`id` AND `pv`.`playlist_id` = :playlist_id ORDER BY `pv`.`position` ASC');
+        $stmt->execute(['playlist_id' => $playlistId]);
+        $videos = $stmt->fetchAll();
+
+        return $videos;
+    }
 }
