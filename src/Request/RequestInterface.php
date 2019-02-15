@@ -20,6 +20,16 @@ interface RequestInterface
     public function setUri(string $uri);
 
     /**
+     * @return string
+     */
+    public function getBody();
+
+    /**
+     * @param string $body
+     */
+    public function setBody($body);
+
+    /**
      * @return array
      */
     public function getQuery();

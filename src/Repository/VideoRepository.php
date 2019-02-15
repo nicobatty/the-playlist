@@ -43,4 +43,43 @@ class VideoRepository implements RepositoryInterface
 
         return $videos;
     }
+
+    /**
+     * @param $data
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function create($data)
+    {
+        $stmt = $this->pdo->prepare('INSERT INTO `video` (`title`) VALUES (:title)');
+        $stmt->execute($data);
+        $lastId = $this->pdo->lastInsertId();
+
+        return $this->findById($lastId);
+    }
+
+    /**
+     * @param $id
+     * @param $data
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function update($id, $data)
+    {
+        $stmt = $this->pdo->prepare('UPDATE `video` SET `title` = :title WHERE id = :id');
+        $stmt->execute($data + ['id' => $id]);
+
+        return $this->findById($id);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NotFoundException
+     */
+    public function delete($id)
+    {
+        $stmt = $this->pdo->prepare('DELETE FROM `video` WHERE id = :id');
+        $stmt->execute(['id' => $id]);
+    }
 }

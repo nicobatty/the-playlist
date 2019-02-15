@@ -32,19 +32,33 @@ class App
         $controller = $this->getController($factoryName);
         $methodName = $this->getMethodName($request, $route);
         $params = $route->getParams();
+        $params[] = $request;
 
         $response = $controller->$methodName(...$params);
 
         return $response;
     }
 
+    /**
+     * @param RequestInterface $request
+     * @param Route $route
+     * @return mixed
+     * @throws \Exception
+     */
     protected function getMethodName(RequestInterface $request, Route $route)
     {
         $method = $request->getMethod();
         $methodMapping = $route->getMethodMapping();
+        if (!isset($methodMapping[$method])) {
+            throw new \Exception('No action found for this method');
+        }
         return $methodMapping[$method];
     }
 
+    /**
+     * @param $factoryName
+     * @return Controller\ControllerInterface
+     */
     protected function getController($factoryName)
     {
         /** @var ControllerFactoryInterface $factory */

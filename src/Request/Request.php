@@ -11,6 +11,8 @@ class Request implements RequestInterface
 {
     protected $uri;
 
+    protected $body;
+
     protected $query;
 
     protected $post;
@@ -33,6 +35,22 @@ class Request implements RequestInterface
     public function setUri(string $uri)
     {
         $this->uri = $uri;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * @param string $body
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
     }
 
     /**

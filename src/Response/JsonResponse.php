@@ -35,6 +35,8 @@ class JsonResponse
 
         http_response_code($this->httpCode);
         header('Content-Type: application/json');
-        echo $json;
+        if ($this->body) {
+            echo $json;
+        }
     }
 }

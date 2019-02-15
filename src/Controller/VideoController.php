@@ -9,6 +9,7 @@ namespace NicoBatty\ThePlaylist\Controller;
 
 use NicoBatty\ThePlaylist\Exception\NotFoundException;
 use NicoBatty\ThePlaylist\Repository\RepositoryInterface;
+use NicoBatty\ThePlaylist\Request\RequestInterface;
 use NicoBatty\ThePlaylist\Response\JsonResponse;
 
 class VideoController implements ControllerInterface
@@ -43,26 +44,46 @@ class VideoController implements ControllerInterface
         return $response;
     }
 
+    public function post(RequestInterface $request)
+    {
+        $response = new JsonResponse();
+        $body = $request->getBody();
+        $content = json_decode($body, true);
+        $video = $this->repository->create($content);
+
+        $response->setBody($video);
+
+        return $response;
+    }
+
+    public function put(int $id, RequestInterface $request)
+    {
+        $response = new JsonResponse();
+        $body = $request->getBody();
+        $content = json_decode($body, true);
+        try {
+            $video = $this->repository->update($id, $content);
+            $response->setBody($video);
+        } catch (NotFoundException $e) {
+            $this->updateNotFoundResponse($response, $e);
+        }
+
+        return $response;
+    }
+
+    public function delete(int $id)
+    {
+        $response = new JsonResponse();
+        $this->repository->delete($id);
+
+        return $response;
+    }
+
     protected function updateNotFoundResponse(JsonResponse $response, \Exception $e)
     {
         $response->setBody(
             ['error' => $e->getMessage()]
         );
         $response->setHttpCode(404);
-    }
-
-    public function post()
-    {
-        // TODO Implement
-    }
-
-    public function put(int $id)
-    {
-        // TODO Implement
-    }
-
-    public function delete(int $id)
-    {
-        // TODO Implement
     }
 }

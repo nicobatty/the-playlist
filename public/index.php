@@ -10,6 +10,7 @@ require __DIR__ . '/../autoload.php';
 
 $requestParams = [
     'uri' => $_SERVER['REQUEST_URI'],
+    'body' => file_get_contents('php://input'),
     'query' => $_GET,
     'post' => $_POST,
     'method' => $_SERVER['REQUEST_METHOD'],
@@ -29,6 +30,7 @@ $routing[] = (new Route())->setUriRegex('/\\/videos$/')
     ->setFactory(VideoControllerFactory::class)
     ->setMethodMapping([
         'GET' => 'getList',
+        'POST' => 'post'
     ]);
 
 $request = (new RequestFactory())->create($requestParams);

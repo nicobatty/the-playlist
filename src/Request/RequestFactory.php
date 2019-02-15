@@ -19,6 +19,7 @@ class RequestFactory
     {
         $request = new Request();
         $request->setUri($params['uri']);
+        $request->setBody($params['body']);
         $request->setHeaders($params['headers']);
         $request->setPost($params['post']);
         $request->setQuery($params['query']);
