@@ -63,3 +63,9 @@ This project being time constrained, the code structure and functionality was pr
 * PATCH method support: Only PUT is available for updates. PATCH needs to be implements.
 * [DOCKER] Replace `php:apache` image with `nginx` and `php:fpm`: Time constraint got in the way but that is something I have done for Symfony4 (https://github.com/nicobatty/docker-symfony) and Magento2 though.
 
+
+## Other works
+
+You can also look at (https://github.com/nicobatty/condition-checker) if you want other coding examples. This one is a small library (early Work In Progress) for dynamic nested condition checking on data with group of condition types ALL, and ANY. It also support custom messages on error. You can look at the [main integration test](https://github.com/nicobatty/condition-checker/blob/master/tests/Integration/RegularConditionTest.php) to see how it works.
+
+The rest of my work is not public.
