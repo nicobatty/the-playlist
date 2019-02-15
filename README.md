@@ -52,6 +52,7 @@ This project being time constrained, the code structure and functionality was pr
 
 * Error handling: Outside of the missing requested objects, invalid or duplicate requests are not currently properly handled and will return 500 errors.
 * ORM support: There is no actual Product or Playlist objects right now. The repositories recover, create and update straight from the data which is converted back to JSON. This part was a bit too time consuming for this demo.
+* Table Lock: There are some missings locks that could create duplicate playlist video's position.
 * Testing: REST API benefits a lot from functional tests. Unit testing and using a TDD approach.
 * Proper technical documentation: Right now the documentation mostly contains return and parameters information but not actual explanation. Though proper code is supposed to remain readable even without documentation. The class and method names should mostly follow the Clean Code standard here.
 * Proper route matching: Right now the route matching uses raw regex expression to detect the URL matching and ID parameters. So instead of using something like this `/^\\/playlists\\/([\\d]+)\\/videos\\/([\\d]+)$/` we would match with something like this `/playlists/<playlist_id>/videos/<video_id>`
